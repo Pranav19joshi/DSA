@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int getMax(vector<int>& nums) {
+        int maxi = nums[0]; 
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] > maxi) {
+                maxi = nums[i];
+            }
+        }
+        return maxi;
+    }
+    int findSum(vector<int>& nums) {
+        int sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+        }
+        return sum;
+    }
+    int capacity(vector<int>& arr, int k) {
+        int days = 1;      
+        int currentLoad = 0;
+        for (int i = 0; i < arr.size(); i++) {
+            if (currentLoad + arr[i] <= k) {
+                currentLoad += arr[i];
+            } 
+            else {
+                days++;
+                currentLoad = arr[i]; 
+            }
+        }
+        return days;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int start =getMax(weights) ;
+        int end = findSum(weights);
+        int mid ;
+        int res ;
+        int ans = -1;
+        while(start<=end){
+            mid = (start+end)/2;  
+            if(capacity(weights , mid) <= days){
+                end = mid-1;
+                ans = mid;
+            }
+            else{
+                start = mid+1;
+            }
+        }
+        return ans;
+
+    }
+};
